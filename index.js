@@ -89,8 +89,16 @@ document.body.addEventListener('click', function clickListener() {
 })
 
 document.body.addEventListener('keyup', function keyUpListener(e) {
-  if (allowedKeys.includes(e.key.toLowerCase())) {
+  /**
+   * If we pressed ctrl key or "R" key with ctrl key pressed, we
+   * don't want to continue
+   **/
+  if (
+    (e.key.toLowerCase() === 'r' && e.ctrlKey === true) ||
+    e.key.toLowerCase() === 'control'
+  )
+    return
+  if (allowedKeys.includes(e.key.toLowerCase()))
     addBox(content, 'You pressed the key ' + e.key.toUpperCase())
-  }
   console.log('You pressed the the key: ' + e.key)
 })
