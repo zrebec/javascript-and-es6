@@ -69,7 +69,7 @@ function onload() {
     getFormattedTimestamp(new Date())
 }
 
-function createNewBox(text) {
+function addBox(element, text) {
   const box = document.createElement('div')
   const boxEventName = document.createElement('div')
   const boxEventTimestamp = document.createElement('div')
@@ -80,17 +80,17 @@ function createNewBox(text) {
   boxEventTimestamp.textContent = getFormattedTimestamp(new Date())
   box.appendChild(boxEventName)
   box.appendChild(boxEventTimestamp)
-  content.appendChild(box)
+  element.appendChild(box)
 }
 
-document.querySelector('body').addEventListener('click', function () {
-  createNewBox('You clicked!')
+document.body.addEventListener('click', function clickListener() {
+  addBox(content, 'You clicked!')
   console.log('You clicked in body')
 })
 
-window.addEventListener('keyup', function (e) {
+document.body.addEventListener('keyup', function keyUpListener(e) {
   if (allowedKeys.includes(e.key.toLowerCase())) {
-    createNewBox('You pressed the key ' + e.key.toUpperCase())
+    addBox(content, 'You pressed the key ' + e.key.toUpperCase())
   }
   console.log('You pressed the the key: ' + e.key)
 })
