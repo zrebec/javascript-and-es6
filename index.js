@@ -168,67 +168,15 @@ document.body.addEventListener('keyup', function keyUpListener(e) {
     e.key.toLowerCase() === 'control'
   )
     return
-  const movePixels = 50
-  let oldHorizontalPosition = parseInt(
-    getComputedStyle(document.querySelector('#content')).left,
-    10
-  )
-  let oldVerticalPosition = parseInt(
-    getComputedStyle(document.querySelector('#content')).top,
-    10
-  )
-  if (isNaN(oldHorizontalPosition)) oldHorizontalPosition = 0
-  if (isNaN(oldVerticalPosition)) oldVerticalPosition = 0
-  let newHorizontalPosition
-  let newVerticalPosition
 
-  if (e.key.toLocaleLowerCase() === 'arrowleft' || e.keyCode === 37)
-    // Dolava
-    // newHorizontalPosition = oldHorizontalPosition - movePixels
+  if (e.key.toLowerCase() === 'arrowleft' || e.key.toLowerCase() === 'a')
     moveBall('left')
-  else if (e.key.toLocaleLowerCase() === 'arrowright' || e.keyCode === 39)
-    // Doprava
-    // newHorizontalPosition = oldHorizontalPosition + movePixels
+  else if (e.key.toLowerCase() === 'arrowright' || e.key.toLowerCase() === 'd')
     moveBall('right')
-  else if (e.key.toLocaleLowerCase() === 'arrowup' || e.keyCode === 38)
-    // Hore
-    // newVerticalPosition = oldVerticalPosition - movePixels
+  else if (e.key.toLowerCase() === 'arrowup' || e.key.toLowerCase() === 'w')
     moveBall('up')
-  else if (e.key.toLocaleLowerCase() === 'arrowdown' || e.keyCode === 40)
-    // Dole
-    // newVerticalPosition = oldVerticalPosition + movePixels
+  else if (e.key.toLowerCase() === 'arrowdown' || e.key.toLowerCase() === 's')
     moveBall('down')
-  else if (
-    (e.key.toLocaleLowerCase() === 'arrowleft' || e.keyCode === 37) &&
-    (e.key.toLocaleLowerCase() === 'arrowup' || e.keyCode === 38)
-  ) {
-    // Dolava a hore
-    newHorizontalPosition = oldHorizontalPosition - movePixels
-    newVerticalPosition = oldVerticalPosition - movePixels
-  } else if (
-    (e.key.toLocaleLowerCase() === 'arrowright' || e.keyCode === 39) &&
-    (e.key.toLocaleLowerCase() === 'arrowdown' || e.keyCode === 40)
-  ) {
-    // Doprava a dole
-    newHorizontalPosition = oldHorizontalPosition + movePixels
-    newVerticalPosition = oldVerticalPosition + movePixels
-  } else if (
-    (e.key.toLocaleLowerCase() === 'arrowright' || e.keyCode === 39) &&
-    (e.key.toLocaleLowerCase() === 'arrowup' || e.keyCode === 38)
-  ) {
-    // Doprava a hore
-    newHorizontalPosition = oldHorizontalPosition + movePixels
-    newVerticalPosition = oldVerticalPosition - movePixels
-  } else if (
-    (e.key.toLocaleLowerCase() === 'arrowleft' || e.keyCode === 37) &&
-    (e.key.toLocaleLowerCase() === 'arrodown' || e.keyCode === 40)
-  ) {
-    // Dolava a dole
-    newHorizontalPosition = oldHorizontalPosition - movePixels
-    newVerticalPosition = oldVerticalPosition + movePixels
-  } else if (allowedKeys.includes(e.key.toLowerCase()))
+  else if (allowedKeys.includes(e.key.toLowerCase()))
     addBox(content, 'You pressed the key ' + e.key.toUpperCase())
-
-  document.querySelector('#content').style.left = newHorizontalPosition + 'px'
-  document.querySelector('#content').style.top = newVerticalPosition + 'px'
 })
