@@ -1,0 +1,9 @@
+:root {
+  --main-bg: #ddd;
+  --main-fg: #ccc;
+}
+
+body {
+  background-color: var(--main-bg);
+  color: var(--main-fg);
+}
