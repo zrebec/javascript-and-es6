@@ -1,9 +1,67 @@
 :root {
   --main-bg: #ddd;
   --main-fg: #333;
+  --base-padding: 1rem;
+  --header-height: 5rem;
+  --footer-height: 0rem;
+}
+
+html,
+body,
+h1,
+h2 {
+  margin: 0;
+  padding: 0;
 }
 
 body {
   background-color: var(--main-bg);
   color: var(--main-fg);
+}
+
+header {
+  background-color: var(--main-fg);
+  color: var(--main-bg);
+  display: flex;
+  padding: var(--base-padding);
+  height: var(--header-height);
+  align-items: center;
+}
+
+header > h1 {
+  width: 50%;
+  text-transform: uppercase;
+}
+
+header > h2 {
+  text-align: end;
+  flex-grow: 1;
+}
+
+main {
+  padding: var(--base-padding);
+}
+
+.content {
+  max-width: 40rem;
+  margin: 0 auto;
+  /* TODO BUG Only near half of header height is calculated here */
+  /* Correct value should be 9rem but why? */
+  height: calc(100vh - var(--header-height) - var(--footer-height));
+}
+
+.content .box {
+  margin: var(--base-padding) 0;
+  padding: calc(var(--base-padding) / 0.75);
+  border: 1px solid var(--main-fg);
+  display: flex;
+}
+
+.content .box .event-name {
+  width: 50%;
+}
+
+.content .box .event-timestamp {
+  text-align: end;
+  flex-grow: 1;
 }
