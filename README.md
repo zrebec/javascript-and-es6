@@ -6,6 +6,23 @@ Väčšina vedomostí čerpaná z dostpných kurzov a snahe učiť sa kažý de�
 
 ## Základy Javascriptu
 
+### Event listeners
+
+Pred opustením stránky sa môžeš užívateľa spýtať, či chce naozaj odísť zo
+stránky alebo či chce zostať pomocout `beforeunload` event listera. Je tam
+zdojený kód a to `event.returnValue` a `return` pretože prvý prípad funguje
+pri novšých prehliadačoch zatiaľ čo klasické return funguje pri starších alebo
+prehliadačov používajúcich staršiu verziu javascriptu.
+
+> Nezneužívať, nepatrí sa to
+
+```javascript
+window.addEventListener('beforeunload', function (event) {
+  event.returnValue = ':('
+  return ':('
+})
+```
+
 ### Funkcie
 
 Môžeš vytvárať aj anonymné funkcie čo je niekedy dobré a užitočné hlavne pri

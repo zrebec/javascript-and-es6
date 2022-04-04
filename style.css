@@ -43,7 +43,11 @@ main {
 }
 
 .content {
+  position: absolute;
+  left: 0;
+  right: 0;
   max-width: 40rem;
+  overflow: hidden;
   margin: 0 auto;
   /* TODO BUG Only near half of header height is calculated here */
   /* Correct value should be 9rem but why? */

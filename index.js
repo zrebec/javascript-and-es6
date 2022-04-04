@@ -98,7 +98,23 @@ document.body.addEventListener('keyup', function keyUpListener(e) {
     e.key.toLowerCase() === 'control'
   )
     return
-  if (allowedKeys.includes(e.key.toLowerCase()))
-    addBox(content, 'You pressed the key ' + e.key.toUpperCase())
-  console.log('You pressed the the key: ' + e.key)
+  let oldPosition = parseInt(
+    getComputedStyle(document.querySelector('#content')).left
+  )
+  if (isNaN(oldPosition)) oldPosition = 0
+  let newPosition
+
+  switch (e.key.toLowerCase()) {
+    case 'arrowleft':
+      newPosition = oldPosition - 50
+      break
+    case 'arrowright':
+      newPosition = oldPosition + 50
+      break
+    default:
+      if (allowedKeys.includes(e.key.toLowerCase()))
+        addBox(content, 'You pressed the key ' + e.key.toUpperCase())
+  }
+
+  document.querySelector('#content').style.left = newPosition + 'px'
 })
