@@ -1,9 +1,14 @@
 :root {
   --main-bg: #ddd;
   --main-fg: #333;
+  --secondary-bg: #555;
+  --secondary-fg: #bbb;
   --base-padding: 1rem;
   --header-height: 5rem;
   --footer-height: 0rem;
+
+  --ball-size: 2rem;
+  --ball-color: orange;
 }
 
 html,
@@ -69,4 +74,20 @@ main {
 .content .box .event-timestamp {
   text-align: end;
   flex-grow: 1;
+}
+
+.playground {
+  position: relative;
+  background-color: var(--secondary-bg);
+  color: var(--secondary-fg);
+  border: 1px solid black;
+  height: 30rem;
+}
+
+.ball {
+  position: absolute;
+  background-color: var(--ball-color);
+  width: var(--ball-size);
+  height: var(--ball-size);
+  border-radius: 50%;
 }

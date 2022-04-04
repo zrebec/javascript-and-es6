@@ -59,6 +59,14 @@ const allowedKeys = [
 ]
 
 /**
+ * Game constants
+ */
+const ballSize = 40
+const moveRatio = ballSize / 4
+const ballElement = document.querySelector('#content .playground .ball')
+const playgroundElement = document.querySelector('#content .playground')
+
+/**
  * This function is called after full load of page
  */
 function onload() {
@@ -67,6 +75,7 @@ function onload() {
   content.style.display = 'block'
   document.querySelector('#content .box .event-timestamp').textContent =
     getFormattedTimestamp(new Date())
+  centerBallPosition()
 }
 
 function addBox(element, text) {
@@ -81,6 +90,67 @@ function addBox(element, text) {
   box.appendChild(boxEventName)
   box.appendChild(boxEventTimestamp)
   element.appendChild(box)
+}
+
+function moveBall(direction) {
+  x = ballElement.style.left
+  y = ballElement.style.top
+  const playgroundWidth = parseInt(
+    getComputedStyle(playgroundElement).width,
+    10
+  )
+  const playgroundHeight = parseInt(
+    getComputedStyle(playgroundElement).height,
+    10
+  )
+  switch (direction) {
+    case 'left':
+      x = parseInt(ballElement.style.left, 10) - moveRatio
+      break
+    case 'right':
+      x = parseInt(ballElement.style.left, 10) + moveRatio
+      break
+    case 'up':
+      y = parseInt(ballElement.style.top, 10) - moveRatio
+      break
+    case 'down':
+      y = parseInt(ballElement.style.top, 10) + moveRatio
+      break
+  }
+  console.log(`x: ${x}, y: ${y}`)
+  if (x < 0) x = 0
+  if (y < 0) y = 0
+  if (x + ballSize > playgroundWidth) x = playgroundWidth - ballSize
+  if (y + ballSize > playgroundHeight) y = playgroundHeight - ballSize
+  ballElement.style.left = x + 'px'
+  ballElement.style.top = y + 'px'
+}
+
+function centerBallPosition() {
+  // Set playground size constants
+  const playgroundWidth = parseInt(
+    getComputedStyle(playgroundElement).width,
+    10
+  )
+  const playgroundHeight = parseInt(
+    getComputedStyle(playgroundElement).height,
+    10
+  )
+
+  // Set starting ball position
+  const ballHorizontalPosition = Math.round(playgroundWidth / 2 - ballSize / 2)
+  const ballVerticalPosition = Math.round(playgroundHeight / 2 - ballSize / 2)
+  ballElement.style.left = ballHorizontalPosition + 'px'
+  ballElement.style.top = ballVerticalPosition + 'px'
+
+  // Set ball size
+  ballElement.style.width = ballSize + 'px'
+  ballElement.style.height = ballSize + 'px'
+
+  console.log(`Playground size: ${playgroundWidth}x${playgroundHeight}`)
+  console.log(
+    `Starting ball position: ${ballHorizontalPosition}x${ballVerticalPosition}`
+  )
 }
 
 document.body.addEventListener('click', function clickListener() {
@@ -114,16 +184,20 @@ document.body.addEventListener('keyup', function keyUpListener(e) {
 
   if (e.key.toLocaleLowerCase() === 'arrowleft' || e.keyCode === 37)
     // Dolava
-    newHorizontalPosition = oldHorizontalPosition - movePixels
+    // newHorizontalPosition = oldHorizontalPosition - movePixels
+    moveBall('left')
   else if (e.key.toLocaleLowerCase() === 'arrowright' || e.keyCode === 39)
     // Doprava
-    newHorizontalPosition = oldHorizontalPosition + movePixels
+    // newHorizontalPosition = oldHorizontalPosition + movePixels
+    moveBall('right')
   else if (e.key.toLocaleLowerCase() === 'arrowup' || e.keyCode === 38)
     // Hore
-    newVerticalPosition = oldVerticalPosition - movePixels
+    // newVerticalPosition = oldVerticalPosition - movePixels
+    moveBall('up')
   else if (e.key.toLocaleLowerCase() === 'arrowdown' || e.keyCode === 40)
     // Dole
-    newVerticalPosition = oldVerticalPosition + movePixels
+    // newVerticalPosition = oldVerticalPosition + movePixels
+    moveBall('down')
   else if (
     (e.key.toLocaleLowerCase() === 'arrowleft' || e.keyCode === 37) &&
     (e.key.toLocaleLowerCase() === 'arrowup' || e.keyCode === 38)
