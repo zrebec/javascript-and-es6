@@ -46,12 +46,13 @@ main {
   position: absolute;
   left: 0;
   right: 0;
+  top: 0 + var(--header-height);
   max-width: 40rem;
   overflow: hidden;
   margin: 0 auto;
   /* TODO BUG Only near half of header height is calculated here */
   /* Correct value should be 9rem but why? */
-  height: calc(100vh - var(--header-height) - var(--footer-height));
+  /*height: calc(100vh - var(--header-height) - var(--footer-height));*/
 }
 
 .content .box {
