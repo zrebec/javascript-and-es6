@@ -71,6 +71,10 @@ main {
   width: 50%;
 }
 
+.content .box .event-name::first-letter {
+  text-transform: uppercase;
+}
+
 .content .box .event-timestamp {
   text-align: end;
   flex-grow: 1;

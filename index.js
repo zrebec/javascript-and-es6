@@ -46,6 +46,14 @@ const allowedKeys = [
   'arrowdown',
   'arrowleft',
   'arrowright',
+  'enter',
+  ' ',
+  '?',
+  '!',
+  '.',
+  ',',
+  '-',
+  '_',
   '0',
   '1',
   '2',
@@ -65,6 +73,7 @@ const ballSize = 40
 const moveRatio = ballSize / 4
 const ballElement = document.querySelector('#content .playground .ball')
 const playgroundElement = document.querySelector('#content .playground')
+let writtenWord = ''
 
 /**
  * This function is called after full load of page
@@ -168,7 +177,6 @@ document.body.addEventListener('keyup', function keyUpListener(e) {
     e.key.toLowerCase() === 'control'
   )
     return
-
   if (e.key.toLowerCase() === 'arrowleft' || e.key.toLowerCase() === 'a')
     moveBall('left')
   else if (e.key.toLowerCase() === 'arrowright' || e.key.toLowerCase() === 'd')
@@ -177,6 +185,15 @@ document.body.addEventListener('keyup', function keyUpListener(e) {
     moveBall('up')
   else if (e.key.toLowerCase() === 'arrowdown' || e.key.toLowerCase() === 's')
     moveBall('down')
-  else if (allowedKeys.includes(e.key.toLowerCase()))
-    addBox(content, 'You pressed the key ' + e.key.toUpperCase())
+  console.log(e.key)
+  if (
+    allowedKeys.includes(e.key.toLowerCase()) &&
+    e.key.toLowerCase() !== 'enter'
+  ) {
+    writtenWord += e.key
+  }
+  if (e.key.toLowerCase() === 'enter') {
+    addBox(content, writtenWord)
+    writtenWord = ''
+  }
 })
