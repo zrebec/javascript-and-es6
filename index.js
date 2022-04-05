@@ -15,55 +15,17 @@ function getFormattedTimestamp(d) {
 }
 
 let content = document
-const allowedKeys = [
-  'a',
-  'b',
-  'c',
-  'd',
-  'e',
-  'f',
-  'g',
-  'h',
-  'i',
-  'j',
-  'k',
-  'l',
-  'm',
-  'n',
-  'o',
-  'p',
-  'q',
-  'r',
-  's',
-  't',
-  'u',
-  'v',
-  'w',
-  'x',
-  'y',
-  'z',
+const forbiddenKeys = [
   'arrowup',
   'arrowdown',
   'arrowleft',
   'arrowright',
-  'enter',
-  ' ',
-  '?',
-  '!',
-  '.',
-  ',',
-  '-',
-  '_',
-  '0',
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
+  'shift',
+  'control',
+  'command',
+  'option',
+  'alt',
+  'dead',
 ]
 
 /**
@@ -74,6 +36,8 @@ const moveRatio = ballSize / 4
 const ballElement = document.querySelector('#content .playground .ball')
 const playgroundElement = document.querySelector('#content .playground')
 let writtenWord = ''
+let chatMode = false
+let box
 
 /**
  * This function is called after full load of page
@@ -82,36 +46,43 @@ function onload() {
   content = document.querySelector('#content')
   // Make content of page visible (default is none before full load)
   content.style.display = 'block'
-  document.querySelector('#content .box .event-timestamp').textContent =
-    getFormattedTimestamp(new Date())
+  document.querySelector('#content .box .event-timestamp').textContent = getFormattedTimestamp(
+    new Date()
+  )
   centerBallPosition()
 }
 
-function addBox(element, text) {
+function addBox(element) {
   const box = document.createElement('div')
   const boxEventName = document.createElement('div')
   const boxEventTimestamp = document.createElement('div')
   box.className = 'box'
   boxEventName.className = 'event-name'
-  boxEventName.textContent = text
+  boxEventName.textContent = ''
   boxEventTimestamp.className = 'event-timestamp'
-  boxEventTimestamp.textContent = getFormattedTimestamp(new Date())
+  //boxEventTimestamp.textContent = getFormattedTimestamp(new Date())
+  boxEventTimestamp.textContent = 'Writing...'
   box.appendChild(boxEventName)
   box.appendChild(boxEventTimestamp)
   element.appendChild(box)
+  return box
+}
+
+function updateBox(box, text) {
+  let messageElement = box.querySelector('.event-name')
+  messageElement.textContent = text
+}
+
+function finishBox(box) {
+  let timestampElement = box.querySelector('.event-timestamp')
+  timestampElement.textContent = getFormattedTimestamp(new Date())
 }
 
 function moveBall(direction) {
   x = ballElement.style.left
   y = ballElement.style.top
-  const playgroundWidth = parseInt(
-    getComputedStyle(playgroundElement).width,
-    10
-  )
-  const playgroundHeight = parseInt(
-    getComputedStyle(playgroundElement).height,
-    10
-  )
+  const playgroundWidth = parseInt(getComputedStyle(playgroundElement).width, 10)
+  const playgroundHeight = parseInt(getComputedStyle(playgroundElement).height, 10)
   switch (direction) {
     case 'left':
       x = parseInt(ballElement.style.left, 10) - moveRatio
@@ -137,14 +108,8 @@ function moveBall(direction) {
 
 function centerBallPosition() {
   // Set playground size constants
-  const playgroundWidth = parseInt(
-    getComputedStyle(playgroundElement).width,
-    10
-  )
-  const playgroundHeight = parseInt(
-    getComputedStyle(playgroundElement).height,
-    10
-  )
+  const playgroundWidth = parseInt(getComputedStyle(playgroundElement).width, 10)
+  const playgroundHeight = parseInt(getComputedStyle(playgroundElement).height, 10)
 
   // Set starting ball position
   const ballHorizontalPosition = Math.round(playgroundWidth / 2 - ballSize / 2)
@@ -157,9 +122,7 @@ function centerBallPosition() {
   ballElement.style.height = ballSize + 'px'
 
   console.log(`Playground size: ${playgroundWidth}x${playgroundHeight}`)
-  console.log(
-    `Starting ball position: ${ballHorizontalPosition}x${ballVerticalPosition}`
-  )
+  console.log(`Starting ball position: ${ballHorizontalPosition}x${ballVerticalPosition}`)
 }
 
 document.body.addEventListener('click', function clickListener() {
@@ -167,33 +130,42 @@ document.body.addEventListener('click', function clickListener() {
   console.log('You clicked in body')
 })
 
-document.body.addEventListener('keyup', function keyUpListener(e) {
+document.body.addEventListener('keydown', function keyUpListener(e) {
   /**
    * If we pressed ctrl key or "R" key with ctrl key pressed, we
    * don't want to continue
    **/
-  if (
-    (e.key.toLowerCase() === 'r' && e.ctrlKey === true) ||
-    e.key.toLowerCase() === 'control'
-  )
+  if ((e.key.toLowerCase() === 'r' && e.ctrlKey === true) || e.key.toLowerCase() === 'control')
     return
-  if (e.key.toLowerCase() === 'arrowleft' || e.key.toLowerCase() === 'a')
-    moveBall('left')
-  else if (e.key.toLowerCase() === 'arrowright' || e.key.toLowerCase() === 'd')
-    moveBall('right')
-  else if (e.key.toLowerCase() === 'arrowup' || e.key.toLowerCase() === 'w')
-    moveBall('up')
-  else if (e.key.toLowerCase() === 'arrowdown' || e.key.toLowerCase() === 's')
-    moveBall('down')
-  console.log(e.key)
-  if (
-    allowedKeys.includes(e.key.toLowerCase()) &&
-    e.key.toLowerCase() !== 'enter'
-  ) {
-    writtenWord += e.key
+
+  // If we are not in the chat mode, we can play the game
+  if (!chatMode) {
+    if (e.key.toLowerCase() === 'arrowleft' || e.key.toLowerCase() === 'a') moveBall('left')
+    else if (e.key.toLowerCase() === 'arrowright' || e.key.toLowerCase() === 'd') moveBall('right')
+    else if (e.key.toLowerCase() === 'arrowup' || e.key.toLowerCase() === 'w') moveBall('up')
+    else if (e.key.toLowerCase() === 'arrowdown' || e.key.toLowerCase() === 's') moveBall('down')
   }
+
+  if (e.key.toLowerCase() === 'c' && !chatMode) {
+    // Entering to chat mode
+    chatMode = true
+    box = addBox(content, '')
+    return
+  }
+
+  if (
+    !forbiddenKeys.includes(e.key.toLowerCase()) &&
+    e.key.toLowerCase() !== 'enter' &&
+    chatMode === true
+  ) {
+    if (e.key.toLowerCase() === 'backspace') writtenWord = writtenWord.slice(0, -1)
+    else writtenWord += e.key
+    updateBox(box, writtenWord)
+  }
+
   if (e.key.toLowerCase() === 'enter') {
-    addBox(content, writtenWord)
+    finishBox(box)
     writtenWord = ''
+    chatMode = false
   }
 })
