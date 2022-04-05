@@ -66,6 +66,7 @@ function addBox(element) {
   box.appendChild(boxEventName)
   box.appendChild(boxEventTimestamp)
   element.appendChild(box)
+  playgroundElement.style.visibility = 'hidden'
   return box
 }
 
@@ -74,9 +75,19 @@ function updateBox(box, text) {
   messageElement.textContent = text
 }
 
-function finishBox(box) {
+function finishBox(element, box, text) {
+  console.log(box)
+  if (box === undefined) return
+  playgroundElement.style.visibility = 'visible'
+  // If text is empty, we don't wan't
+  if (text === '') {
+    element.removeChild(box)
+    return
+  }
   let timestampElement = box.querySelector('.event-timestamp')
   timestampElement.textContent = getFormattedTimestamp(new Date())
+  box = undefined
+  return box
 }
 
 function moveBall(direction) {
@@ -98,7 +109,7 @@ function moveBall(direction) {
       y = parseInt(ballElement.style.top, 10) + moveRatio
       break
   }
-  console.log(`x: ${x}, y: ${y}`)
+  // console.log(`x: ${x}, y: ${y}`)
   if (x < 0) x = 0
   if (y < 0) y = 0
   if (x + ballSize > playgroundWidth) x = playgroundWidth - ballSize
@@ -134,7 +145,8 @@ function drawBoard() {
       ball.style.height = ballSize + 'px'
       ball.style.left = x * ballSize + 'px'
       ball.style.top = y * ballSize + 'px'
-      ball.style.backgroundColor = '#888'
+      // ball.style.backgroundColor = '#888'
+      ball.textContent = 'X'
       playgroundElement.appendChild(ball)
     }
   }
@@ -155,8 +167,7 @@ function centerBallPosition() {
   // Set ball size
   ballElement.style.width = ballSize + 'px'
   ballElement.style.height = ballSize + 'px'
-  ballElement.style.zIndex = 1
-
+  ballElement.style.backgroundColor = '#06a'
   console.log(`Playground size: ${playgroundWidth}x${playgroundHeight}`)
   console.log(`Starting ball position: ${ballHorizontalPosition}x${ballVerticalPosition}`)
 }
@@ -200,7 +211,7 @@ document.body.addEventListener('keydown', function keyUpListener(e) {
   }
 
   if (e.key.toLowerCase() === 'enter') {
-    finishBox(box)
+    box = finishBox(content, box, writtenWord)
     writtenWord = ''
     chatMode = false
   }

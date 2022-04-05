@@ -88,6 +88,14 @@ main {
   color: var(--tertial-fg);
 }
 
+.gameboard {
+  background-color: black;
+  color: white;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+}
+
 .playground {
   position: relative;
   background-color: var(--secondary-bg);
@@ -96,8 +104,18 @@ main {
   height: 30rem;
 }
 
+.playground-paused {
+  /* background-color: black; */
+  height: 30rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: -999;
+}
+
 .ball {
   position: absolute;
-  background-color: var(--ball-color);
-  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
