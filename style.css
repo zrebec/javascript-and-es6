@@ -8,7 +8,6 @@
   --header-height: 5rem;
   --footer-height: 0rem;
 
-  --ball-size: 2rem;
   --ball-color: orange;
 }
 
@@ -100,7 +99,5 @@ main {
 .ball {
   position: absolute;
   background-color: var(--ball-color);
-  width: var(--ball-size);
-  height: var(--ball-size);
   border-radius: 50%;
 }

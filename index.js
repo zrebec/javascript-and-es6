@@ -26,13 +26,14 @@ const forbiddenKeys = [
   'option',
   'alt',
   'dead',
+  'meta',
 ]
 
 /**
  * Game constants
  */
 const ballSize = 40
-const moveRatio = ballSize / 4
+const moveRatio = ballSize / 1
 const ballElement = document.querySelector('#content .playground .ball')
 const playgroundElement = document.querySelector('#content .playground')
 let writtenWord = ''
@@ -106,7 +107,41 @@ function moveBall(direction) {
   ballElement.style.top = y + 'px'
 }
 
+function drawBoard() {
+  // How big is a one ball?
+  // Set ball size
+  // let ball = document.createElement('div')
+  // ballElement.style.width = ballSize + 'px'
+  // ballElement.style.height = ballSize + 'px'
+
+  const playgroundWidth = parseInt(getComputedStyle(playgroundElement).width, 10)
+  const playgroundHeight = parseInt(getComputedStyle(playgroundElement).height, 10)
+
+  // How many balls can I put on horizontal line of playground?
+  xBallsTotal = Math.floor(playgroundWidth / ballSize)
+
+  // How many balls can I put on horizontal line of playground?
+  yBallsTotal = Math.floor(playgroundHeight / ballSize)
+
+  // Output
+  console.log(`x: ${xBallsTotal}, y: ${yBallsTotal}`)
+
+  for (let x = 0; x < xBallsTotal; x++) {
+    for (let y = 0; y < yBallsTotal; y++) {
+      let ball = document.createElement('div')
+      ball.className = 'ball'
+      ball.style.width = ballSize + 'px'
+      ball.style.height = ballSize + 'px'
+      ball.style.left = x * ballSize + 'px'
+      ball.style.top = y * ballSize + 'px'
+      ball.style.backgroundColor = '#888'
+      playgroundElement.appendChild(ball)
+    }
+  }
+}
+
 function centerBallPosition() {
+  drawBoard()
   // Set playground size constants
   const playgroundWidth = parseInt(getComputedStyle(playgroundElement).width, 10)
   const playgroundHeight = parseInt(getComputedStyle(playgroundElement).height, 10)
@@ -120,6 +155,7 @@ function centerBallPosition() {
   // Set ball size
   ballElement.style.width = ballSize + 'px'
   ballElement.style.height = ballSize + 'px'
+  ballElement.style.zIndex = 1
 
   console.log(`Playground size: ${playgroundWidth}x${playgroundHeight}`)
   console.log(`Starting ball position: ${ballHorizontalPosition}x${ballVerticalPosition}`)
