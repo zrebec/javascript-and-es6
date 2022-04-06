@@ -119,7 +119,7 @@ function moveBall(direction) {
   ballElement.style.top = y + 'px'
 }
 
-const boardPiecesPerRow = 3
+const boardPiecesPerRow = 5
 const totalPiecesOnChessboard = 5
 const boardPieces = boardPiecesPerRow * boardPiecesPerRow
 const boardPiecesID = []
@@ -134,6 +134,9 @@ for (let i = 0; i < totalPiecesOnChessboard; i++) {
   symbolsToCatchElemet.textContent += symbolToCatch
 }
 
+chessBoard.style.gridTemplateColumns = `repeat(${boardPiecesPerRow}, 1fr)`
+chessBoard.style.gridTemplateRows = `repeat(${boardPiecesPerRow}, 1fr)`
+
 // Display what symbols you must catch
 
 function drawChessBoard() {
@@ -141,6 +144,7 @@ function drawChessBoard() {
     boardPiecesID.push(i)
     const boardPiece = document.createElement('div')
     boardPiece.className = 'chessboard-piece'
+    boardPiece.innerHTML = '&nbsp;'
     chessBoard.appendChild(boardPiece)
   }
   // chessBoard.querySelector(':nth-child(0)').textContent = '🧲'

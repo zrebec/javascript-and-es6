@@ -124,8 +124,6 @@ main {
 .chessboard {
   aspect-ratio: 1 / 1;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
   gap: var(--base-padding);
   margin-bottom: var(--base-padding);
 }
@@ -134,7 +132,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 6rem;
+  font-size: calc(100% + 3.2vmin);
   font-weight: 900;
   background-color: var(--main-fg);
   color: var(--main-bg);
