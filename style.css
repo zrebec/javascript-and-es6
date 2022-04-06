@@ -124,7 +124,7 @@ main {
 .chessboard {
   aspect-ratio: 1 / 1;
   display: grid;
-  gap: var(--base-padding);
+  gap: 0.1rem;
   margin-bottom: var(--base-padding);
 }
 
@@ -142,7 +142,7 @@ main {
 .symbols {
   background-color: var(--main-fg);
   color: var(--main-bg);
-  font-size: 3rem;
+  font-size: calc(100% + 3.2vmin);
   font-weight: 900;
   border: 1px solid black;
   display: flex;
