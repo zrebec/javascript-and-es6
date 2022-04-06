@@ -51,6 +51,7 @@ function onload() {
     new Date()
   )
   centerBallPosition()
+  drawChessBoard()
 }
 
 function addBox(element) {
@@ -116,6 +117,49 @@ function moveBall(direction) {
   if (y + ballSize > playgroundHeight) y = playgroundHeight - ballSize
   ballElement.style.left = x + 'px'
   ballElement.style.top = y + 'px'
+}
+
+const boardPiecesPerRow = 3
+const totalPiecesOnChessboard = 5
+const boardPieces = boardPiecesPerRow * boardPiecesPerRow
+const boardPiecesID = []
+const symbols = ['🍉', '🫑', '🍇', '🍅', '🥒', '🥕', '🍑', '🍐', '🍋', '🍌', '🍎']
+const chessBoard = document.querySelector('#content .chessboard')
+const symbolsToCatchElemet = document.querySelector('#content .symbols')
+const turnSymbols = []
+let piecePlaceID = 0
+for (let i = 0; i < totalPiecesOnChessboard; i++) {
+  let symbolToCatch = symbols[Math.floor(Math.random() * symbols.length)]
+  turnSymbols.push(symbolToCatch)
+  symbolsToCatchElemet.textContent += symbolToCatch
+}
+
+// Display what symbols you must catch
+
+function drawChessBoard() {
+  for (let i = 0; i < boardPieces; i++) {
+    boardPiecesID.push(i)
+    const boardPiece = document.createElement('div')
+    boardPiece.className = 'chessboard-piece'
+    chessBoard.appendChild(boardPiece)
+  }
+  // chessBoard.querySelector(':nth-child(0)').textContent = '🧲'
+  turnSymbols.forEach((symbol) => {
+    console.log(`Ešte dostupné symboly: ${symbols}`)
+    console.log(
+      `Dostupné pole na ktoré sa dá zobrazovať (index políčka hracej plochy): ${boardPiecesID}`
+    )
+    console.log(`Symbol, ktorý je na rade: ${symbol}`)
+    piecePlaceID = boardPiecesID[Math.floor(Math.random() * boardPiecesID.length)]
+    console.log(`Miesto na ktorom sa symbol nakreslí: ${piecePlaceID + 1}`)
+    const boardPiece = chessBoard.querySelector(`:nth-child(${piecePlaceID + 1})`)
+    /**
+     * We must remove selected piecePlaceID from future select
+     * Otherwise we can have duplicates
+     */
+    boardPiecesID.splice(piecePlaceID, 1)
+    boardPiece.textContent = symbol
+  })
 }
 
 function drawBoard() {

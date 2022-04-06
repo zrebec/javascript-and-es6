@@ -119,3 +119,36 @@ main {
   justify-content: center;
   align-items: center;
 }
+
+/** Sachovnica **/
+.chessboard {
+  aspect-ratio: 1 / 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: var(--base-padding);
+  margin-bottom: var(--base-padding);
+}
+
+.chessboard-piece {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 6rem;
+  font-weight: 900;
+  background-color: var(--main-fg);
+  color: var(--main-bg);
+  border: 1px solid black;
+}
+
+.symbols {
+  background-color: var(--main-fg);
+  color: var(--main-bg);
+  font-size: 3rem;
+  font-weight: 900;
+  border: 1px solid black;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-bottom: var(--base-padding);
+}
