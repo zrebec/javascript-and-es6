@@ -1,0 +1,63 @@
+:root {
+  --main-bg: #ddd;
+  --main-fg: #333;
+  --secondary-bg: #555;
+  --secondary-fg: #bbb;
+  --tertial-fg: #999;
+  --base-padding: 1rem;
+  --header-height: 5rem;
+  --footer-height: 0rem;
+
+  --ball-color: orange;
+}
+
+html,
+body,
+h1,
+h2 {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--main-bg);
+  color: var(--main-fg);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+header {
+  background-color: var(--main-fg);
+  color: var(--main-bg);
+  display: flex;
+  padding: var(--base-padding);
+  height: var(--header-height);
+  align-items: center;
+}
+
+header > h1 {
+  width: 50%;
+  text-transform: uppercase;
+}
+
+header > h2 {
+  text-align: end;
+  flex-grow: 1;
+}
+
+main {
+  font-family: 'Cutive Mono', 'Courier New', Courier, monospace;
+  padding: var(--base-padding);
+}
+
+.content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0 + var(--header-height);
+  max-width: 40rem;
+  overflow: hidden;
+  margin: 0 auto;
+  /* TODO BUG Only near half of header height is calculated here */
+  /* Correct value should be 9rem but why? */
+  /*height: calc(100vh - var(--header-height) - var(--footer-height));*/
+}

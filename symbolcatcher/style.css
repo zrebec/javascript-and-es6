@@ -1,0 +1,29 @@
+.chessboard {
+  aspect-ratio: 1 / 1;
+  display: grid;
+  gap: 0.1rem;
+  margin-bottom: var(--base-padding);
+}
+
+.chessboard-piece {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: calc(100% + 3.2vmin);
+  font-weight: 900;
+  background-color: var(--main-fg);
+  color: var(--main-bg);
+  border: 1px solid black;
+}
+
+.symbols {
+  background-color: var(--main-fg);
+  color: var(--main-bg);
+  font-size: calc(100% + 3.2vmin);
+  font-weight: 900;
+  border: 1px solid black;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-bottom: var(--base-padding);
+}

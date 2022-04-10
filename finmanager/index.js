@@ -1,19 +1,3 @@
-function getFormattedTimestamp(d) {
-  return (
-    ('0' + d.getDate()).slice(-2) +
-    '.' +
-    ('0' + (d.getMonth() + 1)).slice(-2) +
-    '.' +
-    d.getFullYear() +
-    ' ' +
-    ('0' + d.getHours()).slice(-2) +
-    ':' +
-    ('0' + d.getMinutes()).slice(-2) +
-    ':' +
-    ('0' + d.getSeconds()).slice(-2)
-  )
-}
-
 // Basic constants
 let content = document
 let writtenWord = ''
@@ -39,9 +23,7 @@ function onload() {
   content = document.querySelector('#content')
   // Make content of page visible (default is none before full load)
   content.style.display = 'block'
-  document.querySelector('#content .box .event-timestamp').textContent = getFormattedTimestamp(
-    new Date()
-  )
+  document.querySelector('#content .box .event-timestamp').textContent = getFormattedTimestamp()
 }
 
 function addBox(element) {
@@ -52,7 +34,6 @@ function addBox(element) {
   boxEventName.className = 'event-name'
   boxEventName.textContent = ''
   boxEventTimestamp.className = 'event-timestamp'
-  //boxEventTimestamp.textContent = getFormattedTimestamp(new Date())
   boxEventTimestamp.textContent = 'Writing...'
   box.appendChild(boxEventName)
   box.appendChild(boxEventTimestamp)
@@ -76,7 +57,7 @@ function finishBox(element, box, text) {
 
   // Update timestamp in chat
   let timestampElement = box.querySelector('.event-timestamp')
-  timestampElement.textContent = getFormattedTimestamp(new Date())
+  timestampElement.textContent = getFormattedTimestamp()
   box = undefined
   return box
 }

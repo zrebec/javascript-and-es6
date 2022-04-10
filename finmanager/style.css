@@ -1,0 +1,25 @@
+.content .box {
+  margin: var(--base-padding) 0;
+  padding: calc(var(--base-padding) / 2);
+  border: 1px solid var(--main-fg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  gap: calc(var(--base-padding) / 3.75);
+}
+
+.content .box .event-name {
+  order: 2;
+  font-size: larger;
+}
+
+.content .box .event-name::first-letter {
+  text-transform: uppercase;
+}
+
+.content .box .event-timestamp {
+  order: 1;
+  font-size: smaller;
+  flex-grow: 1;
+  color: var(--tertial-fg);
+}
